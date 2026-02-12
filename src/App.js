@@ -1,25 +1,58 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from 'react';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+function Clock() {
+    const [increment, setIncrement] = useState(1);
+    const [count, setCount] = useState(0);
+
+    function handleIncrement() {
+        setIncrement((i) => i + 1);
+    }
+    function handleDecrement() {
+        setIncrement((i) => i - 1);
+    }
+    function handleCountIncrement() {
+        setCount((j) => j + increment);
+    }
+    function handleCountDecrement() {
+        setCount((j) => j - increment);
+    }
+
+    const date = new Date();
+    date.setDate(date.getDate() + count);
+    const newDate = date.toDateString();
+    return (
+        <div className="clock">
+            <div className="row">
+                <button className="btn" onClick={handleDecrement}>
+                    -
+                </button>
+                <p>Increment: {increment}</p>
+                <button className="btn" onClick={handleIncrement}>
+                    +
+                </button>
+            </div>
+            <div className="row">
+                <button className="btn" onClick={handleCountDecrement}>
+                    -
+                </button>
+                <p>Count: {count}</p>
+                <button className="btn" onClick={handleCountIncrement}>
+                    +
+                </button>
+            </div>
+
+            <p>
+                <span>
+                    {count === 0
+                        ? 'Today is '
+                        : count > 0
+                          ? `${count} days from today will be `
+                          : `${Math.abs(count)} day(s) ago was `}
+                </span>
+                {newDate}
+            </p>
+        </div>
+    );
 }
 
-export default App;
+export default Clock;
